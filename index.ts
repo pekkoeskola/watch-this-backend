@@ -1,10 +1,11 @@
-import 'dotenv/config';
-import express from 'express';
+import "dotenv/config";
+import express = require("express");
 
 const app = express();
 
-app.get('/ping', (_req, res) => {
-  res.send('pong');
+
+app.get("/", (_req, res) => {
+  res.send("serves nothing at root, api is at /api");
 });
 
 app.listen(process.env.PORT, () => {

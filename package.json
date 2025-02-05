@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pekkoeskola/watch-this-frontend-web.git"
+    "url": "git+https://github.com/pekkoeskola/watch-this-backend.git"
   },
   "author": "Pekko Eskola",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pekkoeskola/watch-this-frontend-web/issues"
+    "url": "https://github.com/pekkoeskola/watch-this-backend/issues"
   },
-  "homepage": "https://github.com/pekkoeskola/watch-this-frontend-web#readme",
+  "homepage": "https://github.com/pekkoeskola/watch-this-backend#readme",
   "dependencies": {
     "@prisma/client": "^6.3.0",
     "dotenv": "^16.4.7",

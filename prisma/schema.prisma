@@ -11,7 +11,7 @@ model User {
   id                Int                       @id @default(autoincrement())
   username          String
   email             String
-  password          String
+  password_hash      String
   watch_preferences WatchPreferencePerGroup[]
   rating            Rating[]
   watch_groups      WatchGroup[]

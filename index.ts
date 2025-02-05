@@ -1,11 +1,9 @@
 import "dotenv/config";
 import express = require("express");
 
-import { PrismaClient } from "@prisma/client";
+import prisma from "./prisma/client";
 
 const app = express();
-
-const prisma = new PrismaClient();
 
 const dbtest = async () => {
   await prisma.user.create({

@@ -1,5 +1,5 @@
 services:
-  db:
+  dev-postgres-db:
     image: postgres:17.2
     #restart: always
     # set shared memory limit when using docker-compose
@@ -12,3 +12,8 @@ services:
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: dev_sample
+
+  dev-valkey-db:
+    image: valkey/valkey:8.0.2
+    ports:
+      - 6379:6379

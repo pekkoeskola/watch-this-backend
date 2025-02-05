@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/pekkoeskola/watch-this-backend#readme",
   "dependencies": {
+    "@node-rs/argon2": "^2.0.2",
     "@prisma/client": "^6.3.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2"

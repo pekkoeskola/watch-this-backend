@@ -7,7 +7,9 @@
     "tsc": "tsc",
     "dev": "nodemon index.ts",
     "test": "test",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "dev-db-up": "docker compose -f docker-compose.dev.yaml up",
+    "dev-db-down": "docker compose -f docker-compose.dev.yaml down"
   },
   "repository": {
     "type": "git",

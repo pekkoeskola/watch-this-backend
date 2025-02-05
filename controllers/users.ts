@@ -1,8 +1,8 @@
-import express = require("express");
-import argon = require("@node-rs/argon2");
+import express from "express";
+import argon from "@node-rs/argon2";
 
-import { NewUserSchema } from "../zod/schemas";
-import prisma from "../prisma/client";
+import { NewUserSchema } from "../zod/schemas.js";
+import prisma from "../prisma/client.js";
 
 const userRouter = express.Router();
 

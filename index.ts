@@ -5,6 +5,8 @@ const app = express();
 
 const apiRouter = express.Router();
 
+app.use(express.json());
+
 app.use("/api", apiRouter);
 
 app.get("/", (_req, res) => {

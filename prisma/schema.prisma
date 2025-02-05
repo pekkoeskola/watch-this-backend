@@ -10,8 +10,7 @@ generator client {
 model User {
   id                Int                       @id @default(autoincrement())
   username          String
-  email             String
-  password_hash      String
+  password_hash     String
   watch_preferences WatchPreferencePerGroup[]
   rating            Rating[]
   watch_groups      WatchGroup[]

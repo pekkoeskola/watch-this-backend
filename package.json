@@ -29,6 +29,7 @@
     "@valkey/valkey-glide": "^1.2.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "nodemon": "^3.1.9",
     "zod": "^3.24.1"
   },
   "devDependencies": {

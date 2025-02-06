@@ -28,8 +28,8 @@ loginRouter.post("/", async (req, res) => {
     res.status(401).send();
     return;
   }
-  await setSessionID(user.id as number);
-  res.status(200).send({ username });
+  const sessionID = await setSessionID(user.id as number);
+  res.status(200).send({ username, sessionID });
 });
 
 export default loginRouter;

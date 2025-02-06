@@ -1,6 +1,5 @@
 import { test, expect, describe, beforeAll } from "vitest";
-import { removeSession, setSessionID } from "./transactions.js";
-import { Transaction } from "@valkey/valkey-glide";
+import { removeSession, setSessionID } from "./operations.js";
 import glideClient from "./client.js";
 
 describe("after adding sessionid to valkey", () => {
@@ -10,9 +9,7 @@ describe("after adding sessionid to valkey", () => {
   });
 
   test("it should be available", async () => {
-    const transaction = new Transaction();
-    transaction.get("user");
-    const gotID = await glideClient.exec(transaction);
+    const gotID = await glideClient.get("user");
 
     expect(gotID![0]).toBe(ID);
   });
@@ -20,9 +17,7 @@ describe("after adding sessionid to valkey", () => {
   test("after removal it should not be available", async () => {
     await removeSession(1);
 
-    const transaction = new Transaction();
-    transaction.get("user");
-    const gotID = await glideClient.exec(transaction);
+    const gotID = await glideClient.get("user");
 
     expect(gotID![0]).toBeNull();
   });

@@ -6,7 +6,7 @@ A relatively simple app to help curate watchlists for a group watching movies to
 
 ## Architecture
 
-React Frontend
+[React Frontend](https://github.com/pekkoeskola/watch-this-frontend-web)
 
 REST API backend with [Expressjs](https://expressjs.com/) and [Node.js](https://nodejs.org/en), communicating with a [PostgreSQL](https://www.postgresql.org/) db via [PrismaORM](https://www.prisma.io/) + [Valkey](https://github.com/valkey-io/valkey) cache with [valkey-glide](https://github.com/valkey-io/valkey-glide)
 

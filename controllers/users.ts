@@ -1,13 +1,13 @@
 import express from "express";
 import argon from "@node-rs/argon2";
 
-import { NewUserSchema } from "../zod/schemas.js";
+import { UserSchema } from "../zod/schemas.js";
 import prisma from "../prisma/client.js";
 
 const userRouter = express.Router();
 
 userRouter.post("/", async (req, res) => {
-  const data = NewUserSchema.parse(req.body);
+  const data = UserSchema.parse(req.body);
   const { username, password } = data;
 
   //TODO: configure argon for prod, currently using defaults

@@ -1,11 +1,16 @@
 import "dotenv/config";
 import express = require("express");
+import userRouter from "./controllers/users.js";
+import loginRouter from "./controllers/login.js";
 
 const app = express();
 
 const apiRouter = express.Router();
 
 app.use(express.json());
+
+apiRouter.use("/users", userRouter);
+apiRouter.use("/login", loginRouter);
 
 app.use("/api", apiRouter);
 

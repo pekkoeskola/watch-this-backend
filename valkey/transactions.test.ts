@@ -6,7 +6,7 @@ import glideClient from "./client.js";
 describe("after adding sessionid to valkey", () => {
   let ID = "";
   beforeAll(async () => {
-    ID = await setSessionID("user");
+    ID = await setSessionID(1);
   });
 
   test("it should be available", async () => {
@@ -18,7 +18,7 @@ describe("after adding sessionid to valkey", () => {
   });
 
   test("after removal it should not be available", async () => {
-    await removeSession("user");
+    await removeSession(1);
 
     const transaction = new Transaction();
     transaction.get("user");

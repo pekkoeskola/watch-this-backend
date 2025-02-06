@@ -21,14 +21,14 @@ loginRouter.post("/", async (req, res) => {
     return;
   }
   const passwordCorrect = await argon.verify(
-    user.password_hash as string,
+    user.password_hash,
     password,
   );
   if (!passwordCorrect) {
     res.status(401).send();
     return;
   }
-  const sessionID = await setSessionID(user.id as number);
+  const sessionID = await setSessionID(user.id);
   res.status(200).send({ username, sessionID });
 });
 

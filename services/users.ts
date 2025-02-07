@@ -7,12 +7,17 @@ const addUser = async (username: string, password: string) => {
 
   const hash = await argon.hash(password);
 
-  await prisma.user.create({
+  const newUser = await prisma.user.create({
     data: {
       username: username,
       password_hash: hash,
     },
+    select: {
+      username: true,
+    }
   });
+
+  return newUser;
 };
 
 export default {

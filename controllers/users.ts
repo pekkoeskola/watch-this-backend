@@ -10,9 +10,9 @@ userRouter.post("/", async (req, res, next) => {
     const data = UserSchema.parse(req.body);
     const { username, password } = data;
 
-    await userService.addUser(username, password);
+    const newUser = await userService.addUser(username, password);
 
-    res.status(201).send();
+    res.status(201).json(newUser);
   } catch (e) {
     next(e);
   }

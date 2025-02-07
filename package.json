@@ -4,6 +4,9 @@
   "description": "",
   "type": "module",
   "main": "index.js",
+  "prisma": {
+    "seed": "tsc && node prisma/seed.ts"
+  },
   "scripts": {
     "tsc": "tsc",
     "dev": "nodemon -e ts  --exec \"npm run compile-and-run\"",

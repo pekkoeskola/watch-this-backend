@@ -3,10 +3,13 @@ import express = require("express");
 import userRouter from "./controllers/users.js";
 import loginRouter from "./controllers/login.js";
 import errorHandler from "./utils/errorHandler.js";
+import Cookies from "cookies";
 
 const app = express();
 
 const apiRouter = express.Router();
+
+app.use(Cookies.express([""]));
 
 app.use(express.json());
 

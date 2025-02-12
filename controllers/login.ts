@@ -4,15 +4,8 @@ import prisma from "../prisma/client.js";
 import argon from "@node-rs/argon2";
 import { setSessionID } from "../valkey/operations.js";
 import { Response } from "express";
-import Cookies from "cookies";
 
 const loginRouter = express.Router();
-
-declare module "express-serve-static-core" {
-  interface Response {
-    cookies: Cookies;
-  }
-}
 
 loginRouter.post("/", async (req, res: Response) => {
   try {
@@ -36,7 +29,13 @@ loginRouter.post("/", async (req, res: Response) => {
     }
     const sessionID = await setSessionID(user.id);
     //TODO: change options for prod
-    res.cookies.set("id", sessionID, { httpOnly: false, secure: false, signed: false});
+    console.log(new Date(Date.now() + 15 * 60000));
+    res.cookies.set("id", sessionID, {
+      httpOnly: false,
+      secure: false,
+      signed: false,
+      expires: new Date(Date.now() + 15 * 60000),
+    });
     res.status(200).send({ username });
   } catch (e) {
     console.error(e);

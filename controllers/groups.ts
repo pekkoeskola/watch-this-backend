@@ -11,3 +11,5 @@ groupsRouter.get("/:groupID/movies", async (req, res) => {
 
   res.json(movies);
 });
+
+export default groupsRouter;

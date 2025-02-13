@@ -9,7 +9,7 @@ const addMovie = async (tmdb_id: number) => {
 };
 
 const getMoviesByGroup = async (groupID: number) => {
-  const moviesWithGroup = await prisma.watchGroup.findFirst({
+  const moviesWithGroup = await prisma.watchGroup.findFirstOrThrow({
     where: {
       id: groupID,
     },

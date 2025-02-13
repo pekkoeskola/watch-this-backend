@@ -19,4 +19,15 @@ const addMovieToGroup = async (groupID: number, movieID: number) => {
   });
 };
 
-export default { addGroup, addMovieToGroup };
+const addUserToGroup = async (groupID: number, userID: number) => {
+  await prisma.user.update({
+    where: { id: userID },
+    data: {
+      watch_groups: {
+        connect: { id: groupID },
+      },
+    },
+  });
+};
+
+export default { addGroup, addMovieToGroup, addUserToGroup };

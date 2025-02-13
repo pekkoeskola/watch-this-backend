@@ -14,6 +14,9 @@ async function main() {
 
   await groupService.addGroup("group1");
 
+  await groupService.addUserToGroup(1, 1);
+  await groupService.addUserToGroup(1, 2);
+
   await groupService.addMovieToGroup(1, 1);
   await groupService.addMovieToGroup(1, 2);
   await groupService.addMovieToGroup(1, 3);

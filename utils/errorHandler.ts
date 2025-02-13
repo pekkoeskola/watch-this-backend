@@ -1,9 +1,10 @@
 import { Prisma } from "@prisma/client";
 import type { ErrorRequestHandler } from "express";
 
-export const errorHandler: ErrorRequestHandler = (error, _req, _res, next) => {
+export const errorHandler: ErrorRequestHandler = (error, _req, res, next) => {
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     console.error(error.message);
+    res.status(400).send();
   }
 
   next(error);

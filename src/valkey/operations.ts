@@ -7,9 +7,7 @@ export const setSessionID = async (userid: number): Promise<string> => {
 
   const sessionid = session.getNewSessionUUID();
 
-  transaction
-    .set(sessionid, userid.toString())
-    .expire(sessionid, 60 * 15);
+  transaction.set(sessionid, userid.toString()).expire(sessionid, 60 * 15);
   await glideClient.exec(transaction);
 
   return sessionid;

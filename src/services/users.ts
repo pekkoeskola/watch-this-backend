@@ -14,7 +14,7 @@ const addUser = async (username: string, password: string) => {
     },
     select: {
       username: true,
-    }
+    },
   });
 
   return newUser;

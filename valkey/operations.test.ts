@@ -5,20 +5,20 @@ import glideClient from "./client.js";
 describe("after adding sessionid to valkey", () => {
   let ID = "";
   beforeAll(async () => {
-    ID = await setSessionID(1);
+    ID = await setSessionID(54);
   });
 
   test("it should be available", async () => {
-    const gotID = await glideClient.get("user");
+    const gotUser = await glideClient.get(ID);
 
-    expect(gotID![0]).toBe(ID);
+    expect(gotUser).toBe("54");
   });
 
   test("after removal it should not be available", async () => {
-    await removeSession(1);
+    await removeSession(ID);
 
-    const gotID = await glideClient.get("user");
+    const gotUser = await glideClient.get(ID);
 
-    expect(gotID![0]).toBeNull();
+    expect(gotUser).toBeNull();
   });
 });

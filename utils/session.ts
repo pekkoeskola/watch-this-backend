@@ -1,9 +1,9 @@
 import { randomUUID } from "node:crypto";
 
-const getSessionUUID = (): string => {
+const getNewSessionUUID = (): string => {
   return randomUUID();
 };
 
 export default {
-  getSessionUUID
+  getNewSessionUUID
 };

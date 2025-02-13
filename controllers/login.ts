@@ -28,8 +28,7 @@ loginRouter.post("/", async (req, res: Response) => {
       return;
     }
     const sessionID = await setSessionID(user.id);
-    //TODO: change options for prod
-    console.log(new Date(Date.now() + 15 * 60000));
+    //TODO: change options for prod, expires currently in wrong time zone
     res.cookies.set("id", sessionID, {
       httpOnly: false,
       secure: false,

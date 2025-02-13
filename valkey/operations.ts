@@ -5,16 +5,16 @@ import { Transaction } from "@valkey/valkey-glide";
 export const setSessionID = async (userid: number): Promise<string> => {
   const transaction = new Transaction();
 
-  const sessionid = session.getSessionUUID();
+  const sessionid = session.getNewSessionUUID();
 
   transaction
-    .set(userid.toString(), sessionid)
+    .set(sessionid, userid.toString())
     .expire(userid.toString(), 60 * 15);
   await glideClient.exec(transaction);
 
   return sessionid;
 };
 
-export const removeSession = async (userid: number) => {
-  await glideClient.getdel(userid.toString());
+export const removeSession = async (sessionID: string) => {
+  await glideClient.getdel(sessionID);
 };

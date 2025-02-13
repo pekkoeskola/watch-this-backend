@@ -16,3 +16,5 @@ export const setSessionID = async (userid: number): Promise<string> => {
 export const removeSession = async (sessionID: string) => {
   await glideClient.getdel(sessionID);
 };
+
+export const addMovie = () => {};

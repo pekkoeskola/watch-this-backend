@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-import userService from "../src/services/users.js";
-import movieService from "../src/services/movies.js";
-import groupService from "../src/services/groups.js";
+import userService from "../services/users.js";
+import movieService from "../services/movies.js";
+import groupService from "../services/groups.js";
 
 async function main() {
   await userService.addUser("alice", "password");

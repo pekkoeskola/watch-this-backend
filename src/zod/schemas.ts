@@ -1,4 +1,4 @@
-import z = require("zod");
+import z from "zod";
 
 export const UserSchema = z.object({
   username: z.string(),
@@ -7,4 +7,5 @@ export const UserSchema = z.object({
 
 export const MovieSchema = z.object({
   title: z.string(),
+  overview: z.string()
 });

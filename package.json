@@ -5,7 +5,8 @@
   "type": "module",
   "main": "index.js",
   "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "schema": "./src/prisma/schema.prisma",
+    "seed": "tsx ./src/prisma/seed.ts"
   },
   "scripts": {
     "tsc": "tsc",

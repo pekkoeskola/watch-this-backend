@@ -3,7 +3,7 @@ import { MovieSchema } from "../zod/schemas.js";
 import { Movie } from "../../types.js";
 
 const movieResponse = (object: MovieResponse): Movie => {
-  const compressed = { title: object.title };
+  const compressed = { title: object.title, overview: object.overview };
   return MovieSchema.parse(compressed);
 };
 

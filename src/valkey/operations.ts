@@ -1,3 +1,4 @@
+import { Movie } from "../../types.js";
 import session from "../utils/session.js";
 import glideClient from "./client.js";
 import { Transaction } from "@valkey/valkey-glide";
@@ -17,4 +18,18 @@ export const removeSession = async (sessionID: string) => {
   await glideClient.getdel(sessionID);
 };
 
+export const setMovie = async (internalID: number, details: Movie) => {
+  await glideClient.set(internalID.toString(), JSON.stringify(details));
+};
+
+export const getMovie = async (internalID: number) => {
+  const movieDetails = await glideClient.get(internalID.toString());
+  return movieDetails;
+};
+
 export const addMovie = () => {};
+
+export default {
+  setMovie,
+  getMovie,
+};

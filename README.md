@@ -17,7 +17,7 @@ Pushing the Prisma schema and seeding the dbs happens with `npm run dev-db-init`
 ```
 npm install
 npm run dev-db-up
-dev-db-init
+npm run dev-db-init
 npm run dev
 ```
 

@@ -13,6 +13,7 @@ userRouter.post("/", async (req, res, next) => {
     const newUser = await userService.addUser(username, password);
 
     res.status(201).json(newUser);
+    return;
   } catch (e) {
     next(e);
   }

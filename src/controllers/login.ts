@@ -36,6 +36,7 @@ loginRouter.post("/", async (req, res: Response) => {
       expires: new Date(Date.now() + 15 * 60000),
     });
     res.status(200).send({ username });
+    return;
   } catch (e) {
     console.error(e);
   }

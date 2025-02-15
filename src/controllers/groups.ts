@@ -9,8 +9,10 @@ groupsRouter.get("/:groupID/movies", async (req, res, next) => {
     const groupID = req.params.groupID;
 
     const movies = await movieService.getMoviesByGroup(Number(groupID));
+    void movies;
 
     res.json(movies);
+    return;
   } catch (e) {
     next(e);
   }

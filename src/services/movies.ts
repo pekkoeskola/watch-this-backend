@@ -23,10 +23,21 @@ const getMoviesByGroup = async (groupID: number) => {
     },
   });
 
-  return moviesWithGroup;
+  const populated = await populateMovieDetails(moviesWithGroup.movies);
+
+  const withDetails = {
+    groupID: moviesWithGroup.id,
+    name: moviesWithGroup.name,
+    movies: populated,
+  };
+
+  return withDetails;
 };
 
-const fetchMovieDetails = async (internalID: number, tmdbID: number): Promise<Movie> => {
+const fetchMovieDetails = async (
+  internalID: number,
+  tmdbID: number,
+): Promise<Movie> => {
   const cachedDetails = await valkey.getMovie(internalID);
 
   if (!cachedDetails) {
@@ -34,12 +45,12 @@ const fetchMovieDetails = async (internalID: number, tmdbID: number): Promise<Mo
       await tmdb.getMovieDetails(tmdbID),
     );
     await valkey.setMovie(internalID, compressedDetails);
-    return compressedDetails;
+    return { ...compressedDetails, id: internalID };
   }
 
   const parsedDetails = MovieSchema.parse(JSON.parse(cachedDetails.toString()));
 
-  return parsedDetails;
+  return { ...parsedDetails, id: internalID };
 };
 
 const populateMovieDetails = async (

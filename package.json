@@ -11,7 +11,7 @@
   "scripts": {
     "tsc": "tsc",
     "dev": "nodemon -e ts  --exec \"npm run compile-and-run\"",
-    "compile-and-run": "tsc && node build/index.js",
+    "compile-and-run": "tsc && node build/src/index.js",
     "test": "vitest",
     "lint": "eslint .",
     "dev-db-init": "npx prisma db push && npx prisma db seed",

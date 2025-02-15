@@ -4,6 +4,9 @@ export interface NewUser {
 }
 
 export interface Movie {
-  title: string
-  overview: string
+  id: number;
+  title: string;
+  overview: string;
 }
+
+export type MovieDetails = Omit<Movie, "id">;

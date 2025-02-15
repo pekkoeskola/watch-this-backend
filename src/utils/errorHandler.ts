@@ -6,6 +6,7 @@ export const errorHandler: ErrorRequestHandler = (error, _req, res, next) => {
     console.error(error.message);
     res.status(400).send();
   }
+  console.log("unknown error");
 
   next(error);
 };

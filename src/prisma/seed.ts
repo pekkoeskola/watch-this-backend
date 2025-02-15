@@ -8,15 +8,15 @@ async function main() {
   await userService.addUser("alice", "password");
   await userService.addUser("bob", "secret");
 
-  await movieService.addMovie(1);
-  await movieService.addMovie(2);
-  await movieService.addMovie(3);
+  await movieService.addMovie(348);
+  await movieService.addMovie(9361);
+  await movieService.addMovie(11);
 
   await groupService.addGroup("group1");
 
   await groupService.addUserToGroup(1, 1);
   await groupService.addUserToGroup(1, 2);
-
+  
   await groupService.addMovieToGroup(1, 1);
   await groupService.addMovieToGroup(1, 2);
   await groupService.addMovieToGroup(1, 3);
@@ -25,6 +25,7 @@ async function main() {
 main()
   .then(async () => {
     await prisma.$disconnect();
+    process.exit(0);
   })
   .catch(async (e) => {
     console.error(e);

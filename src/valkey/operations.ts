@@ -14,6 +14,10 @@ export const setSessionID = async (userid: number): Promise<string> => {
   return sessionid;
 };
 
+const getUser = async (sessionID: string) => {
+  return await glideClient.get(sessionID);
+};
+
 export const removeSession = async (sessionID: string) => {
   await glideClient.getdel(sessionID);
 };
@@ -31,5 +35,6 @@ export const addMovie = () => {};
 
 export default {
   setMovie,
+  getUser,
   getMovie,
 };

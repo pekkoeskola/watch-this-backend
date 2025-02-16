@@ -1,25 +1,47 @@
-import { MovieDetails } from "../../types.js";
+import { CachedUser, MovieDetails } from "../../types.js";
 import session from "../utils/session.js";
+import { cachedUserSchema } from "../zod/schemas.js";
 import glideClient from "./client.js";
 import { Transaction } from "@valkey/valkey-glide";
 
-export const setSessionID = async (userid: number): Promise<string> => {
+export const setSessionID = async (
+  userid: number,
+  username: string,
+): Promise<string | null> => {
   const transaction = new Transaction();
 
-  const sessionid = session.getNewSessionUUID();
+  const sessionID = session.getNewSessionUUID();
 
-  transaction.set(sessionid, userid.toString()).expire(sessionid, 60 * 15);
-  await glideClient.exec(transaction);
+  const user = { username: username, id: userid };
 
-  return sessionid;
+  const userString = JSON.stringify(user);
+
+  transaction.set(sessionID, userString).expire(sessionID, 60 * 15);
+  const transactionResult = await glideClient.exec(transaction);
+
+  if (!transactionResult || transactionResult.some((result) => !result)) {
+    return null;
+  }
+
+  return sessionID;
 };
 
-const getUser = async (sessionID: string) => {
-  return await glideClient.get(sessionID);
+const getUser = async (sessionID: string): Promise<CachedUser | null> => {
+  const user = await glideClient.get(sessionID);
+  if (!user) {
+    return null;
+  }
+  return cachedUserSchema.parse(JSON.parse(user.toString()));
 };
 
-export const removeSession = async (sessionID: string) => {
-  await glideClient.getdel(sessionID);
+export const removeSession = async (
+  sessionID: string,
+): Promise<CachedUser | null> => {
+  const removedSession = await glideClient.getdel(sessionID);
+  if (!removedSession) {
+    return null;
+  }
+  return cachedUserSchema.parse(JSON.parse(removedSession.toString()));
 };
 
 export const setMovie = async (internalID: number, details: MovieDetails) => {
@@ -34,6 +56,7 @@ export const getMovie = async (internalID: number) => {
 export const addMovie = () => {};
 
 export default {
+  setSessionID,
   setMovie,
   getUser,
   getMovie,

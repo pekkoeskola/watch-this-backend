@@ -3,6 +3,11 @@ export interface NewUser {
   password: string;
 }
 
+export interface CachedUser {
+  id: number;
+  username: string;
+}
+
 export interface Movie {
   id: number;
   title: string;
@@ -10,8 +15,8 @@ export interface Movie {
 }
 
 export interface Group {
-  id: number
-  name: string,
+  id: number;
+  name: string;
 }
 
 export type MovieDetails = Omit<Movie, "id">;

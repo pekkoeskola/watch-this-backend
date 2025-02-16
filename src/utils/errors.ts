@@ -4,3 +4,10 @@ export class TMDBAPIError extends Error {
     this.name = "TMDBAPIError";
   }
 }
+
+export class ValkeyError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "ValkeyError";
+  }
+}

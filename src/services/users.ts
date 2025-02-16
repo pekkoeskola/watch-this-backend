@@ -1,6 +1,7 @@
 import argon from "@node-rs/argon2";
 
 import prisma from "../prisma/client.js";
+import { Group } from "../../types.js";
 
 const addUser = async (username: string, password: string) => {
   //TODO: configure argon for prod, currently using defaults
@@ -20,8 +21,8 @@ const addUser = async (username: string, password: string) => {
   return newUser;
 };
 
-const getUserGroups = async (authenticatedUserID: number) => {
-  const groups = await prisma.user.findMany({
+const getUserGroups = async (authenticatedUserID: number): Promise<Group[]> => {
+  const groups = await prisma.user.findFirstOrThrow({
     where: {
       id: authenticatedUserID,
     },
@@ -31,7 +32,7 @@ const getUserGroups = async (authenticatedUserID: number) => {
       watch_groups: true,
     },
   });
-  return groups;
+  return groups.watch_groups;
 };
 
 export default {

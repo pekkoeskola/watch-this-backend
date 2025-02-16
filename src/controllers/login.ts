@@ -35,7 +35,7 @@ loginRouter.post("/", async (req, res: Response) => {
       signed: false,
       expires: new Date(Date.now() + 15 * 60000),
     });
-    res.status(200).send({ username });
+    res.status(200).send({ username: user.username , id: user.id });
     return;
   } catch (e) {
     console.error(e);

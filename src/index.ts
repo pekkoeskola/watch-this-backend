@@ -5,12 +5,15 @@ import loginRouter from "./controllers/login.js";
 import errorHandler from "./utils/errorHandler.js";
 import groupsRouter from "./controllers/groups.js";
 import Cookies from "cookies";
+import middleware from "./utils/middleware.js";
 
 const app = express();
 
 app.use(Cookies.express([""]));
 
 app.use(express.json());
+
+app.use(middleware.authenticateUser);
 
 const apiRouter = express.Router();
 

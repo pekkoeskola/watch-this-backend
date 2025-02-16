@@ -9,4 +9,9 @@ export interface Movie {
   overview: string;
 }
 
+export interface Group {
+  id: number
+  name: string,
+}
+
 export type MovieDetails = Omit<Movie, "id">;

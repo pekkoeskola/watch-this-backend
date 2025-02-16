@@ -7,7 +7,7 @@ const authenticateUser: RequestHandler = async (req: Request, _res, next) => {
   if(sessionID !== undefined){
     const userID = await auth.authenticateUser(sessionID);
     if (userID !== null) {
-      req.user = z.number().parse(userID.toString());
+      req.user = z.coerce.number().parse(userID.toString());
     }
   }
   next();

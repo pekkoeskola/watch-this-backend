@@ -47,7 +47,6 @@ const fetchMovieDetails = async (
     await valkey.setMovie(internalID, compressedDetails);
     return { ...compressedDetails, id: internalID };
   }
-
   const parsedDetails = MovieSchema.parse(JSON.parse(cachedDetails.toString()));
 
   return { ...parsedDetails, id: internalID };

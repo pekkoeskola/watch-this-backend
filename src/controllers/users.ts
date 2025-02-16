@@ -3,7 +3,6 @@ import express, { Request, Response } from "express";
 import { UserSchema } from "../zod/schemas.js";
 import userService from "../services/users.js";
 import { z } from "zod";
-import prisma from "../prisma/client.js";
 
 const userRouter = express.Router();
 
@@ -22,23 +21,16 @@ userRouter.post("/", async (req, res, next) => {
 });
 
 userRouter.get("/:userID/groups", async (req: Request, res: Response) => {
+  //TODO: reconsider authentication and authorization, userID comparison is practically redundant
   const authenticatedUser = req.user;
   const userID = z.number().parse(req.params.userID);
   if (!authenticatedUser || authenticatedUser !== userID) {
     res.status(401).send();
     return;
   }
-  const groups = await prisma.user.findMany({
-    where: {
-      id: authenticatedUser,
-    },
-    select: {
-      id: true,
-      username: true,
-      watch_groups: true
-    }
-  });
+  const groups = await userService.getUserGroups(userID);
   res.json(groups);
+  return;
 });
 
 export default userRouter;

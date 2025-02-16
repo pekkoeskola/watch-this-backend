@@ -20,6 +20,21 @@ const addUser = async (username: string, password: string) => {
   return newUser;
 };
 
+const getUserGroups = async (authenticatedUserID: number) => {
+  const groups = await prisma.user.findMany({
+    where: {
+      id: authenticatedUserID,
+    },
+    select: {
+      id: true,
+      username: true,
+      watch_groups: true,
+    },
+  });
+  return groups;
+};
+
 export default {
   addUser,
+  getUserGroups
 };

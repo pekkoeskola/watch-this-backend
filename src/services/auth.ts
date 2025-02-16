@@ -9,6 +9,11 @@ const isAuthenticated = async (sessionID: string): Promise<boolean> => {
   return true;
 };
 
+const authenticateUser = async (sessionID: string) => {
+  return await valkey.getUser(sessionID);
+};
+
+//TODO: consider storing information about user groups in valkey for potentially accelerated lookups compared to this non-optimized query
 const belongsToGroup = async (
   groupID: number,
   userID: number,
@@ -27,4 +32,4 @@ const belongsToGroup = async (
   return false;
 };
 
-export default { isAuthenticated, belongsToGroup };
+export default { isAuthenticated, authenticateUser, belongsToGroup };

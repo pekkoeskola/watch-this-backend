@@ -27,6 +27,9 @@ loginRouter.post("/", async (req, res: Response) => {
       where: {
         username: username,
       },
+      omit: {
+        password_hash: false
+      }
     });
 
     if (user === null) {

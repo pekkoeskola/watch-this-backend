@@ -9,10 +9,10 @@ generator client {
 
 model User {
   id                Int                       @id @default(autoincrement())
-  username          String  @unique
+  username          String                    @unique
   password_hash     String
   watch_preferences WatchPreferencePerGroup[]
-  rating            Rating[]
+  ratings           Rating[]
   watch_groups      WatchGroup[]
 }
 
@@ -20,7 +20,7 @@ model Movie {
   internal_movie_id Int                       @id @default(autoincrement())
   tmdb_id           Int
   watch_preferences WatchPreferencePerGroup[]
-  rating            Rating[]
+  ratings           Rating[]
   watch_groups      WatchGroup[]
 }
 

@@ -18,7 +18,7 @@ model User {
 
 model Movie {
   internal_movie_id Int                       @id @default(autoincrement())
-  tmdb_id           Int
+  tmdb_id           Int                       @unique
   watch_preferences WatchPreferencePerGroup[]
   ratings           Rating[]
   watch_groups      WatchGroup[]

@@ -14,3 +14,5 @@ export const MovieSchema = z.object({
   title: z.string(),
   overview: z.string().optional(),
 });
+
+export const coerceToNumber = (value: string) => z.coerce.number().parse(value);

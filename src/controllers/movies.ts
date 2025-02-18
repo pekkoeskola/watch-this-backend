@@ -6,7 +6,7 @@ const movieRouter = express.Router();
 
 movieRouter.get("/", async (req: Request, res: Response) => {
   //TODO: better validation?
-  const searchKeyword = z.coerce.string().parse(req.query.keyword) ;
+  const searchKeyword = z.coerce.string().parse(req.query.keyword);
 
   const movies = await movieService.searchMovie(searchKeyword);
 

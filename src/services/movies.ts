@@ -4,13 +4,44 @@ import compress from "../tmdb/compress.js";
 import tmdb from "../tmdb/tmdb.js";
 import valkey from "../valkey/operations.js";
 import { MovieSchema } from "../zod/schemas.js";
+import { Prisma } from "@prisma/client";
 
+//prefer addMovieOrGetExistingInternalID in most cases to avoid error situations
 const addMovie = async (tmdb_id: number) => {
-  await prisma.movie.create({
+  const addedMovie = await prisma.movie.create({
     data: {
       tmdb_id,
     },
   });
+  return addedMovie.internal_movie_id;
+};
+
+const addMovieOrGetExistingInternalID = async (tmdb_id: number) => {
+  try {
+    const addedMovie = await prisma.movie.create({
+      data: {
+        tmdb_id,
+      },
+    });
+    return addedMovie.internal_movie_id;
+  } catch (e) {
+    if (
+      e instanceof Prisma.PrismaClientKnownRequestError &&
+      e.code === "P2002"
+    ) {
+      const movie = await prisma.movie.findFirstOrThrow({
+        where: {
+          tmdb_id: tmdb_id,
+        },
+        select: {
+          internal_movie_id: true,
+        },
+      });
+      return movie.internal_movie_id;
+    } else {
+      throw e;
+    }
+  }
 };
 
 const getMoviesByGroup = async (groupID: number) => {
@@ -52,7 +83,9 @@ const fetchMovieDetails = async (
   return { ...parsedDetails, id: internalID };
 };
 
-const searchMovie = async (searchString: string): Promise<MovieDetails[] | null> => {
+const searchMovie = async (
+  searchString: string,
+): Promise<MovieDetails[] | null> => {
   return compress.MovieSearchResponse(await tmdb.searchByString(searchString));
 };
 
@@ -69,8 +102,9 @@ const populateMovieDetails = async (
 
 export default {
   addMovie,
+  addMovieOrGetExistingInternalID,
   getMoviesByGroup,
   fetchMovieDetails,
   populateMovieDetails,
-  searchMovie
+  searchMovie,
 };

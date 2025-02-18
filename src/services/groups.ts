@@ -9,7 +9,7 @@ const addGroup = async (name: string) => {
 };
 
 const addMovieToGroup = async (groupID: number, movieID: number) => {
-  await prisma.movie.update({
+  const addedMovie = await prisma.movie.update({
     where: { internal_movie_id: movieID },
     data: {
       watch_groups: {
@@ -17,6 +17,7 @@ const addMovieToGroup = async (groupID: number, movieID: number) => {
       },
     },
   });
+  return addedMovie;
 };
 
 const addUserToGroup = async (groupID: number, userID: number) => {

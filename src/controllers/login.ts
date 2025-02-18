@@ -3,8 +3,9 @@ import { UserSchema } from "../zod/schemas.js";
 import prisma from "../prisma/client.js";
 import argon from "@node-rs/argon2";
 import valkey from "../valkey/operations.js";
-import { Response } from "express";
+import { Request, Response } from "express";
 import { CachedUser } from "../../types.js";
+import authService from "../services/auth.js";
 
 const loginRouter = express.Router();
 
@@ -19,6 +20,7 @@ loginRouter.get("/", (req, res: Response<CachedUser>) => {
 });
 
 loginRouter.post("/", async (req, res: Response) => {
+  //TODO: massive controller, move logic to service or overall reason to consider splitting code into routes and controllers?
   try {
     const data = UserSchema.parse(req.body);
     const { username, password } = data;
@@ -28,8 +30,8 @@ loginRouter.post("/", async (req, res: Response) => {
         username: username,
       },
       omit: {
-        password_hash: false
-      }
+        password_hash: false,
+      },
     });
 
     if (user === null) {
@@ -42,7 +44,7 @@ loginRouter.post("/", async (req, res: Response) => {
       return;
     }
     const sessionID = await valkey.setSessionID(user.id, user.username);
-    //TODO: change options for prod, expires currently in wrong time zone
+    //TODO: change options for prod, expires currently in wrong time zone (edit: seems like it doesn't actually, but test)
     res.cookies.set("id", sessionID, {
       httpOnly: false,
       secure: false,
@@ -54,6 +56,22 @@ loginRouter.post("/", async (req, res: Response) => {
   } catch (e) {
     console.error(e);
   }
+});
+
+//DELETE request to /login used to log out
+loginRouter.delete("/", async (req: Request, res) => {
+  const user = req.user;
+  const sessionID = req.cookies.get("id");
+  //TODO: this is a silly amount of checks that can be removed through a redesign of the auth middleware
+  if (!user || !sessionID || !(await authService.logOut(sessionID))) {
+    res.status(400).json({
+      error: "Session already expired or you have already logged out",
+    });
+    return;
+  }
+  res.status(200).json({ success: "Logged out succesfully" });
+
+  return;
 });
 
 export default loginRouter;

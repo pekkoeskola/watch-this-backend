@@ -32,4 +32,11 @@ const belongsToGroup = async (
   return false;
 };
 
-export default { isAuthenticated, authenticateUser, belongsToGroup };
+const logOut = async (sessionID: string) => {
+  if (!(await valkey.removeSession(sessionID))) {
+    return false;
+  }
+  return true;
+};
+
+export default { isAuthenticated, authenticateUser, belongsToGroup, logOut };

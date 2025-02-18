@@ -4,6 +4,8 @@ import { cachedUserSchema } from "../zod/schemas.js";
 import glideClient from "./client.js";
 import { Transaction } from "@valkey/valkey-glide";
 
+
+//TODO: provide reverse mapping userID -> sessionID in valkey as well
 export const setSessionID = async (
   userid: number,
   username: string,
@@ -34,7 +36,7 @@ const getUser = async (sessionID: string): Promise<CachedUser | null> => {
   return cachedUserSchema.parse(JSON.parse(user.toString()));
 };
 
-export const removeSession = async (
+const removeSession = async (
   sessionID: string,
 ): Promise<CachedUser | null> => {
   const removedSession = await glideClient.getdel(sessionID);
@@ -57,6 +59,7 @@ export const addMovie = () => {};
 
 export default {
   setSessionID,
+  removeSession,
   setMovie,
   getUser,
   getMovie,

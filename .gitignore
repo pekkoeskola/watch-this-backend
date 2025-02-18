@@ -1,7 +1,11 @@
 #node modules
 node_modules
 
-#environment
+#environment variables (may include secrets)
 .env
 
+#possible assets
+public/
+
+#build artifacts
 build/

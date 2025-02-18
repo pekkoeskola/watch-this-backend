@@ -4,6 +4,7 @@ import userRouter from "./controllers/users.js";
 import loginRouter from "./controllers/login.js";
 import errorHandler from "./utils/errorHandler.js";
 import groupsRouter from "./controllers/groups.js";
+import movieRouter from "./controllers/movies.js";
 import Cookies from "cookies";
 import middleware from "./utils/middleware.js";
 
@@ -20,6 +21,7 @@ const apiRouter = express.Router();
 apiRouter.use("/groups", groupsRouter);
 apiRouter.use("/users", userRouter);
 apiRouter.use("/login", loginRouter);
+apiRouter.use("/movies", movieRouter);
 
 app.use("/api", apiRouter);
 

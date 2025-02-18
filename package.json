@@ -23,7 +23,6 @@
     "url": "git+https://github.com/pekkoeskola/watch-this-backend.git"
   },
   "author": "Pekko Eskola",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/pekkoeskola/watch-this-backend/issues"
   },

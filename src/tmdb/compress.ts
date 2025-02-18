@@ -1,4 +1,4 @@
-import { MovieResponse } from "moviedb-promise";
+import { MovieResponse, MovieResultsResponse } from "moviedb-promise";
 import { MovieSchema } from "../zod/schemas.js";
 import { MovieDetails } from "../../types.js";
 
@@ -7,4 +7,20 @@ const movieResponse = (object: MovieResponse): MovieDetails => {
   return MovieSchema.parse(compressed);
 };
 
-export default { movieResponse };
+const MovieSearchResponse = (
+  object: MovieResultsResponse,
+): MovieDetails[] | null => {
+  if (object.results === undefined) {
+    return null;
+  }
+  const compressed = object.results.map((movie) => {
+    return MovieSchema.parse({
+      title: movie.title,
+      overview: movie.overview,
+    });
+  });
+
+  return compressed;
+};
+
+export default { movieResponse, MovieSearchResponse };

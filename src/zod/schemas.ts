@@ -12,5 +12,5 @@ export const cachedUserSchema = z.object({
 
 export const MovieSchema = z.object({
   title: z.string(),
-  overview: z.string(),
+  overview: z.string().optional(),
 });

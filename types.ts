@@ -11,7 +11,7 @@ export interface CachedUser {
 export interface Movie {
   id: number;
   title: string;
-  overview: string;
+  overview?: string;
 }
 
 export interface Group {

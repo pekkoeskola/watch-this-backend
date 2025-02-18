@@ -1,17 +1,26 @@
 import { Prisma } from "@prisma/client";
 import type { ErrorRequestHandler } from "express";
 import { TMDBAPIError } from "./errors.js";
+import { logError } from "./logger.js";
+import { ZodError } from "zod";
 
 export const errorHandler: ErrorRequestHandler = (error, _req, res, next) => {
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
-    console.error(error.message);
+    logError(error.message);
     res.status(400).send();
+    return;
   }
   if (error instanceof TMDBAPIError) {
-    console.error(error.message);
+    logError(error.message);
+    res.status(500).send();
+    return;
+  }
+  if (error instanceof ZodError) {
+    logError("uncaught ZodError");
+    logError(ZodError);
     res.status(500).send();
   }
-  console.error("unknown error");
+  logError("unknown error");
 
   next(error);
 };

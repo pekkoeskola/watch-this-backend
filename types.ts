@@ -14,6 +14,12 @@ export interface Movie {
   overview?: string;
 }
 
+export interface MovieWithTmdbId {
+  id: number;
+  title: string;
+  overview?: string;
+}
+
 export interface Group {
   id: number;
   name: string;

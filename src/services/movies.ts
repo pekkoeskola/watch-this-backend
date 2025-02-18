@@ -1,4 +1,4 @@
-import { Movie, MovieDetails } from "../../types.js";
+import { Movie, MovieWithTmdbId } from "../../types.js";
 import prisma from "../prisma/client.js";
 import compress from "../tmdb/compress.js";
 import tmdb from "../tmdb/tmdb.js";
@@ -83,9 +83,7 @@ const fetchMovieDetails = async (
   return { ...parsedDetails, id: internalID };
 };
 
-const searchMovie = async (
-  searchString: string,
-): Promise<MovieDetails[] | null> => {
+const searchMovie = async (searchString: string): Promise<MovieWithTmdbId[] | null> => {
   return compress.MovieSearchResponse(await tmdb.searchByString(searchString));
 };
 

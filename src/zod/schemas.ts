@@ -10,7 +10,13 @@ export const cachedUserSchema = z.object({
   id: z.number(),
 });
 
+export const MovieDetailsSchema = z.object({
+  title: z.string(),
+  overview: z.string().optional(),
+});
+
 export const MovieSchema = z.object({
+  id: z.number(),
   title: z.string(),
   overview: z.string().optional(),
 });

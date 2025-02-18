@@ -1,5 +1,5 @@
 import { test, expect, describe, beforeAll } from "vitest";
-import { removeSession, setSessionID } from "./operations.js";
+import valkey, { setSessionID } from "./operations.js";
 import glideClient from "./client.js";
 
 describe("after adding sessionid to valkey", () => {
@@ -19,7 +19,7 @@ describe("after adding sessionid to valkey", () => {
   });
 
   test("after removal it should not be available", async () => {
-    await removeSession(ID);
+    await valkey.removeSession(ID);
 
     const gotUser = await glideClient.get(ID);
 

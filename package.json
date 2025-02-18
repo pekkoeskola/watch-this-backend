@@ -4,6 +4,7 @@
   "description": "",
   "type": "module",
   "main": "index.js",
+  "license": "MIT",
   "prisma": {
     "schema": "./src/prisma/schema.prisma",
     "seed": "tsx ./src/prisma/seed.ts"

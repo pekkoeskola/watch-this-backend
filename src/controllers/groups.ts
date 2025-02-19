@@ -27,7 +27,7 @@ groupsRouter.get(
   },
 );
 
-groupsRouter.post("/:groupID/movies:tmdbID", async (req, res, next) => {
+groupsRouter.post("/:groupID/movies/:tmdbID", async (req, res, next) => {
   try {
     const tmdbID = coerceToNumber(req.params.tmdbID);
     const groupID = coerceToNumber(req.params.groupID);

@@ -44,6 +44,38 @@ const addMovieOrGetExistingInternalID = async (tmdb_id: number) => {
   }
 };
 
+const addWatchPreference = async (
+  movieID: number,
+  groupID: number,
+  userID: number,
+  preference: number,
+) => {
+  await prisma.watchPreferencePerGroup.create({
+    data: {
+      preference: preference,
+      movie_id: movieID,
+      group_id: groupID,
+      user_id: userID,
+    },
+  });
+  return;
+};
+
+const addRating =async (
+  movieID: number,
+  userID: number,
+  rating: number,
+) => {
+  await prisma.rating.create({
+    data: {
+      rating: rating,
+      movie_id: movieID,
+      user_id: userID,
+    },
+  });
+  return;
+};
+
 const getMoviesByGroup = async (groupID: number) => {
   const moviesWithGroup = await prisma.watchGroup.findFirstOrThrow({
     where: {
@@ -83,7 +115,9 @@ const fetchMovieDetails = async (
   return { ...parsedDetails, id: internalID };
 };
 
-const searchMovie = async (searchString: string): Promise<MovieWithTmdbId[] | null> => {
+const searchMovie = async (
+  searchString: string,
+): Promise<MovieWithTmdbId[] | null> => {
   return compress.MovieSearchResponse(await tmdb.searchByString(searchString));
 };
 
@@ -101,6 +135,8 @@ const populateMovieDetails = async (
 export default {
   addMovie,
   addMovieOrGetExistingInternalID,
+  addWatchPreference,
+  addRating,
   getMoviesByGroup,
   fetchMovieDetails,
   populateMovieDetails,

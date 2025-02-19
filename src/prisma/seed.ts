@@ -7,6 +7,7 @@ import groupService from "../services/groups.js";
 async function main() {
   await userService.addUser("alice", "password");
   await userService.addUser("bob", "secret");
+  await userService.addUser("Iida", "saskia");
 
   await movieService.addMovie(348);
   await movieService.addMovie(9361);
@@ -16,7 +17,8 @@ async function main() {
 
   await groupService.addUserToGroup(1, 1);
   await groupService.addUserToGroup(1, 2);
-  
+  await groupService.addUserToGroup(1, 3);
+
   await groupService.addMovieToGroup(1, 1);
   await groupService.addMovieToGroup(1, 2);
   await groupService.addMovieToGroup(1, 3);

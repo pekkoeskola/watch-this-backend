@@ -2,9 +2,16 @@ import { MovieResponse, MovieResultsResponse } from "moviedb-promise";
 import { MovieDetailsSchema, MovieSchema } from "../zod/schemas.js";
 import { Movie, MovieDetails } from "../../types.js";
 import { TMDBAPIError } from "../utils/errors.js";
+import tmdb from "./tmdb.js";
 
-const movieResponse = (object: MovieResponse): MovieDetails => {
-  const compressed = { title: object.title, overview: object.overview };
+const movieResponse = async (object: MovieResponse): Promise<MovieDetails> => {
+  const compressed = {
+    title: object.title,
+    overview: object.overview,
+    posterURL: object.poster_path
+      ? await tmdb.getMoviePosterURL(object.poster_path)
+      : undefined,
+  };
   return MovieDetailsSchema.parse(compressed);
 };
 

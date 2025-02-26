@@ -1,12 +1,12 @@
-import tmdb from "./tmdb.js";
+import moviedb from "./clientSetup.js";
 import "dotenv/config";
 
 if (process.env.TMDB_API_KEY === undefined) {
   throw new Error("api key not available");
 }
 
-tmdb
-  .getMovieDetails(348)
+moviedb
+  .movieInfo(348)
   .then((res) => console.log(res))
   .catch((e) => {
     console.error(e);

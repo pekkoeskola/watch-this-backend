@@ -3,7 +3,7 @@ import prisma from "../prisma/client.js";
 import compress from "../tmdb/compress.js";
 import tmdb from "../tmdb/tmdb.js";
 import valkey from "../valkey/operations.js";
-import { MovieSchema } from "../zod/schemas.js";
+import { MovieDetailsSchema } from "../zod/schemas.js";
 import { Prisma } from "@prisma/client";
 
 //prefer addMovieOrGetExistingInternalID in most cases to avoid error situations
@@ -61,11 +61,7 @@ const addWatchPreference = async (
   return;
 };
 
-const addRating =async (
-  movieID: number,
-  userID: number,
-  rating: number,
-) => {
+const addRating = async (movieID: number, userID: number, rating: number) => {
   await prisma.rating.create({
     data: {
       rating: rating,
@@ -104,13 +100,15 @@ const fetchMovieDetails = async (
   const cachedDetails = await valkey.getMovie(internalID);
 
   if (!cachedDetails) {
-    const compressedDetails = compress.movieResponse(
+    const compressedDetails = await compress.movieResponse(
       await tmdb.getMovieDetails(tmdbID),
     );
     await valkey.setMovie(internalID, compressedDetails);
     return { ...compressedDetails, id: internalID };
   }
-  const parsedDetails = MovieSchema.parse(JSON.parse(cachedDetails.toString()));
+  const parsedDetails = MovieDetailsSchema.parse(
+    JSON.parse(cachedDetails.toString()),
+  );
 
   return { ...parsedDetails, id: internalID };
 };

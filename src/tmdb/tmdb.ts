@@ -21,4 +21,11 @@ const getMovieDetails = (id: number) => {
   }
 };
 
-export default { searchByString, getMovieDetails };
+const getMoviePosterURL = async (posterAddress: string) => {
+  //TODO: where should posterSize be determined? Here?
+  const posterSize = "w92";
+  const config = await moviedb.configuration();
+  return `${config.images.base_url}${posterSize}${posterAddress}`;
+};
+
+export default { searchByString, getMovieDetails, getMoviePosterURL };

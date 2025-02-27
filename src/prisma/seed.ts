@@ -22,6 +22,9 @@ async function main() {
   await groupService.addMovieToGroup(1, 1);
   await groupService.addMovieToGroup(1, 2);
   await groupService.addMovieToGroup(1, 3);
+
+  await movieService.addRating(1, 1, 4);
+  await movieService.addRating(1, 2, 4);
 }
 
 main()

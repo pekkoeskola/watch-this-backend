@@ -31,4 +31,18 @@ const addUserToGroup = async (groupID: number, userID: number) => {
   });
 };
 
-export default { addGroup, addMovieToGroup, addUserToGroup };
+const getRatings = async (groupID: number) => {
+  return await prisma.rating.findMany({
+    where: {
+      user: {
+        watch_groups: {
+          some: {
+            id: groupID,
+          },
+        },
+      },
+    },
+  });
+};
+
+export default { addGroup, addMovieToGroup, addUserToGroup, getRatings };

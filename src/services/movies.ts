@@ -6,7 +6,7 @@ import valkey from "../valkey/operations.js";
 import { MovieDetailsSchema } from "../zod/schemas.js";
 import { Prisma } from "@prisma/client";
 
-//prefer addMovieOrGetExistingInternalID in most cases to avoid error situations
+//"deprecated", prefer addMovieOrGetExistingInternalID in most cases to avoid error situations
 const addMovie = async (tmdb_id: number) => {
   const addedMovie = await prisma.movie.create({
     data: {
@@ -93,7 +93,7 @@ const getMoviesByGroup = async (groupID: number) => {
   return withDetails;
 };
 
-const fetchMovieDetails = async (
+const fetchTMDBMovieDetails = async (
   internalID: number,
   tmdbID: number,
 ): Promise<Movie> => {
@@ -124,10 +124,31 @@ const populateMovieDetails = async (
 ): Promise<Movie[]> => {
   const arrayWithDetails = await Promise.all(
     movies.map(async ({ internal_movie_id, tmdb_id }) => {
-      return await fetchMovieDetails(internal_movie_id, tmdb_id);
+      return await fetchTMDBMovieDetails(internal_movie_id, tmdb_id);
     }),
   );
   return arrayWithDetails;
+};
+
+const getRatings = async (movieID: number, groupID: number) => {
+  //TODO: optimize this request or good as is?
+  const query = await prisma.watchGroup.findUniqueOrThrow({
+    where: {
+      id: groupID,
+    },
+    select: {
+      users: {
+        select: {
+          ratings: {
+            where: {
+              movie_id: movieID,
+            },
+          },
+        },
+      },
+    },
+  });
+  return query.users.map((user) => user.ratings);
 };
 
 export default {
@@ -135,8 +156,9 @@ export default {
   addMovieOrGetExistingInternalID,
   addWatchPreference,
   addRating,
+  getRatings,
   getMoviesByGroup,
-  fetchMovieDetails,
+  fetchMovieDetails: fetchTMDBMovieDetails,
   populateMovieDetails,
   searchMovie,
 };

@@ -7,6 +7,7 @@ import groupsRouter from "./controllers/groups.js";
 import movieRouter from "./controllers/movies.js";
 import Cookies from "cookies";
 import middleware from "./utils/middleware.js";
+import ratingsRouter from "./controllers/ratings.js";
 
 const app = express();
 
@@ -22,6 +23,7 @@ apiRouter.use("/groups", groupsRouter);
 apiRouter.use("/users", userRouter);
 apiRouter.use("/login", loginRouter);
 apiRouter.use("/movies", movieRouter);
+apiRouter.use("/ratings", ratingsRouter);
 
 app.use("/api", apiRouter);
 

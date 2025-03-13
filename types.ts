@@ -26,4 +26,11 @@ export interface Group {
   name: string;
 }
 
+export interface Rating {
+  movieID: number;
+  userID: number;
+  rating: number;
+}
+
+
 export type MovieDetails = Omit<Movie, "id">;

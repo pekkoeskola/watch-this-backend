@@ -1,3 +1,4 @@
+import { Rating } from "../../types.js";
 import prisma from "../prisma/client.js";
 
 const addGroup = async (name: string) => {
@@ -31,8 +32,8 @@ const addUserToGroup = async (groupID: number, userID: number) => {
   });
 };
 
-const getRatings = async (groupID: number) => {
-  return await prisma.rating.findMany({
+const getRatings = async (groupID: number): Promise<Rating[]> => {
+  const query = await prisma.rating.findMany({
     where: {
       user: {
         watch_groups: {
@@ -43,6 +44,12 @@ const getRatings = async (groupID: number) => {
       },
     },
   });
+  return query.map(({ movie_id, user_id, rating }) => ({
+    id: `m${movie_id}u${user_id}`,
+    movieID: movie_id,
+    userID: user_id,
+    rating,
+  }));
 };
 
 export default { addGroup, addMovieToGroup, addUserToGroup, getRatings };
